@@ -278,6 +278,18 @@ module Resque
       stats.join "\n"
     end
 
+    get "/queues/:queue/size" do
+      # content_type 'text/event-stream'
+      # stream do |out|
+      #   loop do
+      #     out << resque.size queue
+      #     sleep 0.5
+      #   end
+      # end
+      content_type :json
+      {data: resque.size(params[:queue])}.to_json
+    end
+
     def resque
       Resque
     end

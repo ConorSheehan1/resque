@@ -36,8 +36,11 @@
     </tr>
     <% resque.queues.sort_by { |q| q.to_s }.each do |queue| %>
     <tr>
+      <script>
+      <%= partial :'ajax_count.js', id: "#{queue}_size", src: url_path("/queues/#{queue}/size") %>
+      </script>
       <td class='queue'><a class="queue" href="<%= u "queues/#{queue}" %>"><%= queue %></a></td>
-      <td class='size'><%= resque.size queue %></td>
+      <td class='size' id='<%="#{queue}_size"%>'><%= resque.size queue %></td>
     </tr>
     <% end %>
     <% if failed_multiple_queues? %>

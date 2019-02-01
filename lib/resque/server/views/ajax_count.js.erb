@@ -1,0 +1,14 @@
+function async_get_<%= id %> () {
+  $.ajax({ 
+    type: 'GET', 
+    url: '<%= src %>',
+    success: function (response) { 
+      $('#<%= id %>').html(response.data);
+    }
+  });
+}
+
+// poll <%= src %> for changes
+$(document).ready(function () {
+  setInterval(async_get_<%= id %>, 500);
+});
