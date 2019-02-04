@@ -2,13 +2,17 @@ function async_get_<%= id %> () {
   $.ajax({ 
     type: 'GET', 
     url: '<%= src %>',
-    success: function (response) { 
-      $('#<%= id %>').html(response.data);
+    success: function (response) {
+      elem = $('#<%= id %>')
+      // only apply update when it would change the content
+      if (elem.text() != response.data) {
+        elem.html(response.data);
+      }
     }
   });
 }
 
-// poll <%= src %> for changes
+// poll <%= src %> for changes twice per second
 $(document).ready(function () {
   setInterval(async_get_<%= id %>, 500);
 });

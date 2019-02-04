@@ -88,4 +88,19 @@ describe "Resque web" do
     end
   end
 
+  describe "on GET to /queues/:queue/size" do
+    before do
+      get "/queues/default/size"
+    end
+    it "should return the size of the queue" do
+      assert last_response.body, {data: 0}.to_json
+    end
+    it "should increase the count when the number of jobs increase" do
+      3.times do |n|
+        Resque::Job.create(:default, 'default', 20, '/tmp')
+        assert last_response.body, {data: n}.to_json
+      end
+    end
+  end
+
 end
